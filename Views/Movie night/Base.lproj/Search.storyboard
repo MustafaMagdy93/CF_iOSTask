@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WDz-VP-IF6">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--SearchVC-->
+        <scene sceneID="SdP-sm-eim">
+            <objects>
+                <viewController storyboardIdentifier="SearchVC" id="WDz-VP-IF6" customClass="SearchVC" customModule="Movie_night" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GvH-RY-gxR">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for movie" translatesAutoresizingMaskIntoConstraints="NO" id="2Wg-7A-N8U">
+                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="WDz-VP-IF6" id="ng8-f9-PP4"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IDf-iU-nW7">
+                                <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="EKV-E5-dxC">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <connections>
+                                    <outlet property="dataSource" destination="WDz-VP-IF6" id="3eG-HD-06r"/>
+                                    <outlet property="delegate" destination="WDz-VP-IF6" id="yqp-Xp-X2L"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="t4B-gn-zDn"/>
+                        <color key="backgroundColor" red="0.1176470588" green="0.1176572666" blue="0.1176275685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="t4B-gn-zDn" firstAttribute="trailing" secondItem="IDf-iU-nW7" secondAttribute="trailing" id="DOp-zp-rRd"/>
+                            <constraint firstItem="2Wg-7A-N8U" firstAttribute="trailing" secondItem="t4B-gn-zDn" secondAttribute="trailing" id="UF8-tW-P8e"/>
+                            <constraint firstItem="2Wg-7A-N8U" firstAttribute="top" secondItem="t4B-gn-zDn" secondAttribute="top" id="W4q-Qg-Kji"/>
+                            <constraint firstItem="t4B-gn-zDn" firstAttribute="bottom" secondItem="IDf-iU-nW7" secondAttribute="bottom" id="gjJ-ri-UHB"/>
+                            <constraint firstItem="IDf-iU-nW7" firstAttribute="leading" secondItem="t4B-gn-zDn" secondAttribute="leading" id="hL1-sA-T3n"/>
+                            <constraint firstItem="IDf-iU-nW7" firstAttribute="top" secondItem="2Wg-7A-N8U" secondAttribute="bottom" id="oVW-sM-1Ns"/>
+                            <constraint firstItem="2Wg-7A-N8U" firstAttribute="leading" secondItem="t4B-gn-zDn" secondAttribute="leading" id="uSW-hE-nN1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchBar" destination="2Wg-7A-N8U" id="PbF-sY-fgn"/>
+                        <outlet property="tableView" destination="IDf-iU-nW7" id="W3e-y5-gwA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tlC-F6-9pf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="465" y="384"/>
+        </scene>
+    </scenes>
+</document>

@@ -1,0 +1,6 @@
+framework module Pods_Movie_night {
+  umbrella header "Pods-Movie night-umbrella.h"
+
+  export *
+  module * { export * }
+}
