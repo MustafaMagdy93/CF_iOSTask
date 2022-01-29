@@ -10,7 +10,6 @@ target 'Movie night' do
 	pod 'Kingfisher'
 	pod 'Cosmos'
 	pod 'SwiftlyCache'
-
   target 'Movie nightTests' do
     inherit! :search_paths
     # Pods for testing
