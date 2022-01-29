@@ -3,7 +3,7 @@
 # OVERVIEW
   - Build a simple app to fetch some movies from a server.
 
-#According to your Guidelines:-
+# According to your Guidelines:-
   - Can refresh the home screen with a "RefreshController", just pull the screen down to active it.
   - Caching applied on "getPopularMovies" call.
   - Pagination applied on "PopularCollectionView".
@@ -14,7 +14,7 @@
   - Can see all of reviews of the movie in "TableView", sections for the authors and the cell for the comments.
   - Searching applied on "getPopularMovies" in search bar, just type a letter to see the result.
   
-#Technologies
+# Technologies
   - Generics
   - MVC
   - Alamofire ( network requests )
@@ -25,14 +25,14 @@
   - Singleton
   - RefreshControl
   
-  #Note
+  # Note
   - Some movie's posters are not loading because of posters size.
   
- #Setup
+ # Setup
   - clone the project.
   - install the Pods.
   - clean and build.
   - run.
   
   
-  #Thank you!
+  # Thank you!
