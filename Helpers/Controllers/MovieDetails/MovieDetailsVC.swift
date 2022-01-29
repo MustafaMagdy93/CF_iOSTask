@@ -4,7 +4,7 @@ import Cosmos
 import Kingfisher
 
 class MovieDetailsVC: UIViewController{
-   
+    
     @IBOutlet weak var reviewsTableView: UITableView!
     @IBOutlet weak var moviePopularity: UILabel!
     @IBOutlet weak var movieDate: UILabel!
@@ -52,7 +52,7 @@ extension MovieDetailsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
-
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return reviewsArray[section].author
     }
@@ -62,19 +62,16 @@ extension MovieDetailsVC: UITableViewDelegate, UITableViewDataSource {
         let header = view as! UITableViewHeaderFooterView
         header.textLabel?.textColor = .white
     }
-
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return reviewsArray.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = reviewsTableView.dequeue() as ReviewsTableViewCell
         cell.reviewLabel.text = reviewsArray[indexPath.row].content
         return cell
     }
-
-    
 }
 
 extension MovieDetailsVC {
@@ -92,7 +89,6 @@ extension MovieDetailsVC {
                 self.moviePopularity.text = String(response?.popularity ?? 0)
                 self.movieDescription.text = response?.overview ?? ""
                 self.voteAverageCosmosView.rating = response?.voteAverage ?? 0
-
             case .failure(let error):
                 ShowAlert.alertUser(styleController: .alert, messageTitle: "Warning!", messageBody: error.rawValue, actionTitleOne: "OK", actionStyleOne: .default, actionTitleTwo: "", actionStyleTwo: .default, viewController: self)
             }
@@ -102,19 +98,14 @@ extension MovieDetailsVC {
     func getReviews() {
         TestAPI.shared.getReviews() { (result) in
             Hud.dismiss()
-                switch result {
-                case .success(let response):
-                    self.reviewsArray = response?.results ?? []
-                    self.reviewsTableView.reloadData()
-//                    self.reviewsTableViewHeight.constant = self.reviewsTableView.contentSize.height
-
-                    print("result is : \(self.reviewsArray)")
-
-                case .failure(let error):
-                    ShowAlert.alertUser(styleController: .alert, messageTitle: "Warning!", messageBody: error.rawValue, actionTitleOne: "OK", actionStyleOne: .default, actionTitleTwo: "", actionStyleTwo: .default, viewController: self)
-                }
+            switch result {
+            case .success(let response):
+                self.reviewsArray = response?.results ?? []
+                self.reviewsTableView.reloadData()
+            case .failure(let error):
+                ShowAlert.alertUser(styleController: .alert, messageTitle: "Warning!", messageBody: error.rawValue, actionTitleOne: "OK", actionStyleOne: .default, actionTitleTwo: "", actionStyleTwo: .default, viewController: self)
             }
         }
-
     }
+}
 

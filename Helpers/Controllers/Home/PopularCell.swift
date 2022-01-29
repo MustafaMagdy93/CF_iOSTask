@@ -1,7 +1,6 @@
 
 import UIKit
 
-
 class PopularCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var favButton: UIButton!
@@ -11,7 +10,6 @@ class PopularCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
 

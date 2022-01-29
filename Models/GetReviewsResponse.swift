@@ -3,12 +3,11 @@
 
 import Foundation
 
-// MARK: - Welcome
 struct GetReviewsResponse: Codable {
     let id, page: Int?
     let results: [ReviewResult]?
     let totalPages, totalResults: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case id, page, results
         case totalPages = "total_pages"
@@ -22,7 +21,7 @@ struct ReviewResult: Codable {
     let authorDetails: AuthorDetails?
     let content, createdAt, id, updatedAt: String?
     let url: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case author
         case authorDetails = "author_details"
@@ -38,7 +37,7 @@ struct ReviewResult: Codable {
 struct AuthorDetails: Codable {
     let name, username, avatarPath: String?
     let rating: Int?
-
+    
     enum CodingKeys: String, CodingKey {
         case name, username
         case avatarPath = "avatar_path"

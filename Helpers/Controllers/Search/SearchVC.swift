@@ -16,7 +16,6 @@ class SearchVC: UIViewController {
         filteredData = HomeVC.popularMoviesArray
         searchBar.searchTextField.textColor = .white
     }
-    
 }
 
 extension SearchVC: UITableViewDelegate, UITableViewDataSource {
@@ -32,33 +31,28 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return filteredData.count
-      
-}
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredData.count
+    }
 }
 
 extension SearchVC: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filterContentForSearchText(searchText: searchText)
-}
+    }
+    
     func filterContentForSearchText(searchText: String) {
         if searchText != "" {
-
             filteredData = HomeVC.popularMoviesArray.filter { name in
-
                 return   name.title.lowercased().contains(searchText.lowercased())
-
             }
             tableView.reloadData()
         }else {
-            
             filteredData = HomeVC.popularMoviesArray
-            
         }
         self.tableView.reloadData()
     }

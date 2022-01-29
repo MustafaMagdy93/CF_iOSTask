@@ -7,7 +7,7 @@ class HomeVC: UIViewController{
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var favoritedCollectionView: UICollectionView!
     @IBOutlet weak var popularCollectionView: UICollectionView!
-
+    
     static var popularMoviesArray = [Results]()
     var moviesPerPage = 3
     var limit = 3
@@ -18,7 +18,6 @@ class HomeVC: UIViewController{
     let nowPlayingCollectionViewflowLayout = UICollectionViewFlowLayout()
     let favoritedCollectionViewflowLayout = UICollectionViewFlowLayout()
     let resultsCache = MultiCache<[Results]>()
-    
     static var movieId: Int?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,12 +31,10 @@ class HomeVC: UIViewController{
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         mainView.addSubview(refreshControl) // not required when using UITableViewController
         collectionViewSetUp()
-
     }
     
     func checkCach() {
         if let object = resultsCache.object(forKey: "movies") {
-//            print("当前movies是:\(object)")
             ifDataCached(cachedObject: object)
         } else {
             getPopularMovies()
@@ -49,12 +46,10 @@ class HomeVC: UIViewController{
         nowPlayingCollectionViewflowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         nowPlayingCollectionViewflowLayout.scrollDirection = .horizontal
         popularCollectionView.collectionViewLayout = nowPlayingCollectionViewflowLayout
-        
         favoritedCollectionViewflowLayout.itemSize = CGSize(width: UIScreen.main.bounds.width/2.8, height: 100)
         favoritedCollectionViewflowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         favoritedCollectionViewflowLayout.scrollDirection = .horizontal
         favoritedCollectionView.collectionViewLayout = favoritedCollectionViewflowLayout
-
     }
     
     @objc func refresh(_ sender: AnyObject) {
@@ -62,13 +57,11 @@ class HomeVC: UIViewController{
         getPopularMovies()
         refreshControl.endRefreshing() // End Refreshing
     }
-
+    
     func cellsRegister() {
         favoritedCollectionView.registerCellNib(cellType: FavouriteCollectionViewCell.self)
         popularCollectionView.registerCellNib(cellType: PopularCell.self)
     }
-  
-
 }
 
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -76,11 +69,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         switch collectionView {
         case popularCollectionView:
             return paginationPopularMoviesArray.count
-            
         default:
             return favoritedArray.count
         }
-       
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -102,11 +93,10 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                     if let index = self.favoritedArray.firstIndex(of: self.paginationPopularMoviesArray[indexPath.row]) {
                         self.favoritedArray.remove(at: index)
                         self.favoritedCollectionView.reloadData()
-                        }
+                    }
                 }
             }
             return cell
-            
         default:
             let cell = favoritedCollectionView.dequeue(indexPath: indexPath) as FavouriteCollectionViewCell
             let imageString = favoritedArray[indexPath.row].posterPath
@@ -123,7 +113,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             HomeVC.movieId = paginationPopularMoviesArray[indexPath.row].id
             let storyboard = UIStoryboard(name: "MovieDetails", bundle: nil)
             let view = storyboard.instantiateViewController(identifier: "MovieDetailsVC") as! MovieDetailsVC
-            print(indexPath.row)
             present(view, animated: true, completion: nil)
         default:
             return
@@ -146,32 +135,26 @@ extension HomeVC {
         Hud.show()
         TestAPI.shared.getPopularMovies() { (result) in
             Hud.dismiss()
-                switch result {
-                case .success(let response):
-                    HomeVC.popularMoviesArray = response?.results ?? []
-                    self.resultsCache.set(forKey: "movies", value: HomeVC.popularMoviesArray)
-
-                    self.limit = HomeVC.popularMoviesArray.count
-                    for i in 0..<3 {
-                        self.paginationPopularMoviesArray.append(HomeVC.popularMoviesArray[i])
-                    }
-                    self.popularCollectionView.reloadData()
-                    print("response is : \(HomeVC.popularMoviesArray)")
-
-                case .failure(let error):
-                    ShowAlert.alertUser(styleController: .alert, messageTitle: "Warning!", messageBody: error.rawValue, actionTitleOne: "OK", actionStyleOne: .default, actionTitleTwo: "", actionStyleTwo: .default, viewController: self)
+            switch result {
+            case .success(let response):
+                HomeVC.popularMoviesArray = response?.results ?? []
+                self.resultsCache.set(forKey: "movies", value: HomeVC.popularMoviesArray)
+                self.limit = HomeVC.popularMoviesArray.count
+                for i in 0..<3 {
+                    self.paginationPopularMoviesArray.append(HomeVC.popularMoviesArray[i])
                 }
+                self.popularCollectionView.reloadData()
+            case .failure(let error):
+                ShowAlert.alertUser(styleController: .alert, messageTitle: "Warning!", messageBody: error.rawValue, actionTitleOne: "OK", actionStyleOne: .default, actionTitleTwo: "", actionStyleTwo: .default, viewController: self)
             }
         }
+    }
     
     func ifDataCached(cachedObject: [Results]) {
-//        if let object = cache.object(forKey: "movies") {
-        print("cashed")
-            HomeVC.popularMoviesArray = cachedObject
-            self.limit = HomeVC.popularMoviesArray.count
-            for i in 0..<3 {
-                self.paginationPopularMoviesArray.append(HomeVC.popularMoviesArray[i])
-//            }
+        HomeVC.popularMoviesArray = cachedObject
+        self.limit = HomeVC.popularMoviesArray.count
+        for i in 0..<3 {
+            self.paginationPopularMoviesArray.append(HomeVC.popularMoviesArray[i])
             popularCollectionView.reloadData()
         }
     }
