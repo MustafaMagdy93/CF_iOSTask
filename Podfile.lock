@@ -2,23 +2,27 @@ PODS:
   - Alamofire (5.5.0)
   - Cosmos (23.0.0)
   - Kingfisher (7.1.2)
+  - SwiftlyCache (1.1.8)
 
 DEPENDENCIES:
   - Alamofire
   - Cosmos
   - Kingfisher
+  - SwiftlyCache
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - Cosmos
     - Kingfisher
+    - SwiftlyCache
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   Kingfisher: 44ed6a8504763f27bab46163adfac83f5deb240c
+  SwiftlyCache: 166de69910162c0ea5487921eececbe27252fdda
 
-PODFILE CHECKSUM: 2ca0f5692ca6d8bcec92991cd41779390b663905
+PODFILE CHECKSUM: 2c83e0ec865ba039e05976fd188f47854f40ab19
 
 COCOAPODS: 1.11.2

@@ -1,6 +1,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftlyCache
 
 class HomeVC: UIViewController{
     @IBOutlet weak var mainView: UIView!
@@ -16,10 +17,12 @@ class HomeVC: UIViewController{
     var refreshControl = UIRefreshControl()
     let nowPlayingCollectionViewflowLayout = UICollectionViewFlowLayout()
     let favoritedCollectionViewflowLayout = UICollectionViewFlowLayout()
+    let resultsCache = MultiCache<[Results]>()
+    
     static var movieId: Int?
     
     override func viewWillAppear(_ animated: Bool) {
-        getPopularMovies()
+        checkCach()
     }
     
     override func viewDidLoad() {
@@ -29,6 +32,16 @@ class HomeVC: UIViewController{
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         mainView.addSubview(refreshControl) // not required when using UITableViewController
         collectionViewSetUp()
+
+    }
+    
+    func checkCach() {
+        if let object = resultsCache.object(forKey: "movies") {
+//            print("当前movies是:\(object)")
+            ifDataCached(cachedObject: object)
+        } else {
+            getPopularMovies()
+        }
     }
     
     func collectionViewSetUp() {
@@ -92,7 +105,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                         }
                 }
             }
-            Hud.dismiss()
             return cell
             
         default:
@@ -119,12 +131,13 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        Hud.show()
         if scrollView == popularCollectionView {
+            Hud.show()
             if (scrollView.contentOffset.x + scrollView.frame.size.width) >= (scrollView.contentSize.width) {
                 setPaginationMovies(moviesPerPage: moviesPerPage)
             }
         }
+        Hud.dismiss()
     }
 }
 
@@ -136,8 +149,10 @@ extension HomeVC {
                 switch result {
                 case .success(let response):
                     HomeVC.popularMoviesArray = response?.results ?? []
+                    self.resultsCache.set(forKey: "movies", value: HomeVC.popularMoviesArray)
+
                     self.limit = HomeVC.popularMoviesArray.count
-                    for i in 0..<10 {
+                    for i in 0..<3 {
                         self.paginationPopularMoviesArray.append(HomeVC.popularMoviesArray[i])
                     }
                     self.popularCollectionView.reloadData()
@@ -148,6 +163,18 @@ extension HomeVC {
                 }
             }
         }
+    
+    func ifDataCached(cachedObject: [Results]) {
+//        if let object = cache.object(forKey: "movies") {
+        print("cashed")
+            HomeVC.popularMoviesArray = cachedObject
+            self.limit = HomeVC.popularMoviesArray.count
+            for i in 0..<3 {
+                self.paginationPopularMoviesArray.append(HomeVC.popularMoviesArray[i])
+//            }
+            popularCollectionView.reloadData()
+        }
+    }
     
     func setPaginationMovies(moviesPerPage: Int) {
         if moviesPerPage >= limit {
